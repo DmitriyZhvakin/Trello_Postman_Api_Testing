@@ -16,7 +16,7 @@ jobs:
          - name: run postman collection and generate html report
            run: |
             newman run Dmitriy_Trello.postman_collection.json -e Environment_Dmitriy_Trello.postman_environment.json 
-            --reporters cli,htmlextra --reporter-htmlextra-export htmlreport.html
+            --reporters cli,htmlextra --reporter-htmlextra-export report.html
          - name: attach the results 
            uses: actions/upload-artifact@v3
            with:
