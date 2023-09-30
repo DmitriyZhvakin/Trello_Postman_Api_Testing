@@ -1,0 +1,24 @@
+name: scheduled_run
+on:
+   workflow_dispatch:
+   schedule: 
+     - cron: 30 18 * * 1-5
+jobs:
+  build:
+     runs-on: ubuntu-latest
+     steps:
+         - name: checkout code from remote repozitory
+           uses: actions/checkout@v3
+         - name: install newman
+           run: |
+            npm install -g newman
+            npm install -g newman-reporter-htmlextra
+         - name: run postman collection and generate html report
+           run: |
+            newman run Trello_Postman_Api_Testing.json -e Environment_Dmitriy_Trello.postman_environment.json 
+            --reporters cli,htmlextra --reporter-htmlextra-export htmlreport.html
+         - name: attach the results 
+           uses: actions/upload-artifact@v3
+           with:
+             name: my-artifact
+             path: "*html"
